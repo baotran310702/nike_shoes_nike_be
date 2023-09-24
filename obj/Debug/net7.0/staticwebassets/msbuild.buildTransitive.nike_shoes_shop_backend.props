@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\nike_shoes_shop_backend.props" />
+</Project>
