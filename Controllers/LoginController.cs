@@ -57,7 +57,7 @@ namespace nike_shoes_shop_backend.Controllers
                 new Claim("role",user.role)
             };
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"], claims: claim, expires: DateTime.Now.AddMinutes(1), signingCredentials: credentials);
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"], claims: claim, expires: DateTime.Now.AddSeconds(30), signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
 
