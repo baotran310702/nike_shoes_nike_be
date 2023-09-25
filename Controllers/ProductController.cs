@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using nike_shoes_shop_backend.Data;
+using nike_shoes_shop_backend.Identity;
 using nike_shoes_shop_backend.Models;
 
 namespace nike_shoes_shop_backend.Controllers
@@ -18,6 +20,7 @@ namespace nike_shoes_shop_backend.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet("products")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IEnumerable<Product>> GetProducts()
@@ -44,6 +47,7 @@ namespace nike_shoes_shop_backend.Controllers
             return CreatedAtAction(nameof(GetById), new { id = product.id }, product);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicyName)]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult DeleteProduct(string id)

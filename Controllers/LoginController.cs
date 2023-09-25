@@ -1,8 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using nike_shoes_shop_backend.Data;
 using nike_shoes_shop_backend.Models;
 
 namespace nike_shoes_shop_backend.Controllers
@@ -11,26 +14,35 @@ namespace nike_shoes_shop_backend.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private IConfiguration _config;
 
-        public LoginController(IConfiguration config)
+        private IConfiguration _config;
+        private readonly DataContext _context;
+
+        public LoginController(DataContext context, IConfiguration config)
         {
+            _context = context;
             _config = config;
         }
 
-        private Users AuthenticateUser(Users users)
+        private Users AuthenticateUser(string username, string password)
         {
+            var listUser = from u in _context.Users
+                           select u;
             Users _user = null;
 
-            if (users.username == "admin" && users.password == "12345")
+            foreach (var item in listUser)
             {
-                _user = new Users
+                if (item.username == username && item.password == password)
                 {
-                    username = "mrkevin",
-                    password = "123456"
-                };
+                    _user = new Users
+                    {
+                        userId = item.userId,
+                        username = item.username,
+                        password = item.password,
+                        role = item.role,
+                    };
+                }
             }
-
             return _user;
         }
 
@@ -39,7 +51,13 @@ namespace nike_shoes_shop_backend.Controllers
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"], null, expires: DateTime.Now.AddMinutes(1), signingCredentials: credentials);
+            var claim = new List<Claim>
+            {
+                new Claim("username",user.username),
+                new Claim("role",user.role)
+            };
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"], claims: claim, expires: DateTime.Now.AddMinutes(1), signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
 
@@ -47,10 +65,10 @@ namespace nike_shoes_shop_backend.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login(Users user)
+        public IActionResult Login(LoginRequestModel models)
         {
             IActionResult res = Unauthorized();
-            var user_ = AuthenticateUser(user);
+            var user_ = AuthenticateUser(models.username, models.password);
 
             if (user_ != null)
             {
