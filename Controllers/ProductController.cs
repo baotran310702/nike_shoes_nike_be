@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.IdentityModel.Tokens;
 using nike_shoes_shop_backend.Data;
 using nike_shoes_shop_backend.Identity;
 using nike_shoes_shop_backend.Models;
@@ -74,6 +75,26 @@ namespace nike_shoes_shop_backend.Controllers
         {
             var product = await _context.Products.FindAsync(id);
             return product == null ? NotFound() : Ok(product);
+        }
+
+        [HttpGet("searchProduct")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> getProducts(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return BadRequest();
+            }
+
+            var products = await _context.Products
+            .Where(p => p.title.Contains(keyword)).Take(5).ToListAsync();
+
+            if (products == null)
+            {
+                return NotFound("No products found");
+            }
+            return Ok(products);
         }
 
         [HttpPost("createProduct")]
