@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using nike_shoes_shop_backend.Data;
@@ -16,6 +17,7 @@ namespace nike_shoes_shop_backend.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet("listUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IEnumerable<Users>> GetUsers()
@@ -41,6 +43,7 @@ namespace nike_shoes_shop_backend.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { userId = user.userId }, user);
         }
+
 
         [HttpGet("CartUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]

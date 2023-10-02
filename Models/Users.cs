@@ -8,6 +8,10 @@ public class Users
     public string userId { get; set; }
     public string username { get; set; }
     public string password { get; set; }
-
+    public string fullName { get; set; }
+    public string age { get; set; }
+    public string dob { get; set; }
+    public string email { get; set; }
     public string role { get; set; }
+    public string phone { get; set; }
 }

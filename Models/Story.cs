@@ -10,4 +10,6 @@ public class Story
     public string btn { get; set; }
     public string url { get; set; }
     public string img { get; set; }
+    public string time { get; set; }
+    public string like { get; set; }
 }

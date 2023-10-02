@@ -11,8 +11,8 @@ using nike_shoes_shop_backend.Data;
 namespace nike_shoes_shop_backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230924144430_InitDB")]
-    partial class InitDB
+    [Migration("20231001043242_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,15 @@ namespace nike_shoes_shop_backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("like")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("time")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -115,6 +123,26 @@ namespace nike_shoes_shop_backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("age")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("dob")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

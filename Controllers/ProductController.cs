@@ -20,13 +20,51 @@ namespace nike_shoes_shop_backend.Controllers
             _context = context;
         }
 
-        [Authorize]
+
         [HttpGet("products")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IEnumerable<Product>> GetProducts()
         {
             var list_Product = await _context.Products.ToListAsync();
             return list_Product;
+        }
+
+        [HttpGet("popularSales")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<Product>> GetPopularSales()
+        {
+            var topPopular = await _context.Products.ToListAsync();
+
+            var top3Popular = topPopular.Take(3);
+
+            return top3Popular;
+        }
+
+        [HttpGet("topRateSales")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<Product>> TopRatesSales()
+        {
+            var topPopular = await _context.Products.ToListAsync();
+
+            var top3Popular = topPopular.Take(12);
+
+            return top3Popular;
+        }
+
+        [HttpGet("highlights")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetHighlights()
+        {
+            var topPopular = await _context.Products.ToListAsync();
+
+            var lastItem = topPopular.Last();
+
+            if (lastItem == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lastItem);
         }
 
         [HttpGet("product")]

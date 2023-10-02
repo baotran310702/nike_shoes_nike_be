@@ -85,7 +85,15 @@ namespace nike_shoes_shop_backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("like")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("time")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

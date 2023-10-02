@@ -5,7 +5,7 @@
 namespace nike_shoes_shop_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,9 @@ namespace nike_shoes_shop_backend.Migrations
                     text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     btn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    img = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    img = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    time = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    like = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +63,13 @@ namespace nike_shoes_shop_backend.Migrations
                     userId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    age = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dob = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
+
                 },
                 constraints: table =>
                 {

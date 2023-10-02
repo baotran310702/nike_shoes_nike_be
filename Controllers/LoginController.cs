@@ -38,8 +38,12 @@ namespace nike_shoes_shop_backend.Controllers
                     {
                         userId = item.userId,
                         username = item.username,
-                        password = item.password,
                         role = item.role,
+                        fullName = item.fullName,
+                        age = item.age,
+                        dob = item.dob,
+                        email = item.email,
+                        phone = item.phone
                     };
                 }
             }
@@ -73,7 +77,7 @@ namespace nike_shoes_shop_backend.Controllers
             if (user_ != null)
             {
                 var token = GenerateToken(user_);
-                res = Ok(new { token = token });
+                res = Ok(new { token = token, userData = user_ });
             }
             return res;
         }
