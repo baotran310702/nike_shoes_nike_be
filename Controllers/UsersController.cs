@@ -68,5 +68,41 @@ namespace nike_shoes_shop_backend.Controllers
 
         }
 
+        [HttpPut("updateUser")]
+        public async Task<IActionResult> UpdateUser(string userId, Users user)
+        {
+            if (userId != user.userId)
+            {
+                return BadRequest("Invalid Id");
+            }
+
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.userId == userId);
+
+            if (existingUser == null)
+            {
+                return NotFound("User not found");
+            }
+            try
+            {
+                existingUser.fullName = user.fullName;
+                existingUser.dob = user.dob;
+                if (user.password != "")
+                {
+                    existingUser.password = user.password;
+                }
+                existingUser.email = user.email;
+                existingUser.phone = user.phone;
+
+                _context.Users.Update(existingUser);
+                await _context.SaveChangesAsync();
+
+                return Ok(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Server Error: {ex.Message}");
+            }
+        }
+
     }
 }

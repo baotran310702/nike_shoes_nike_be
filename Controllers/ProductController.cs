@@ -77,7 +77,7 @@ namespace nike_shoes_shop_backend.Controllers
             return product == null ? NotFound() : Ok(product);
         }
 
-        [HttpGet("productPaginate")]
+        [HttpGet("lazyProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductPaginate(int page = 1, int pageSize = 12)
