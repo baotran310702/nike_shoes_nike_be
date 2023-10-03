@@ -77,6 +77,17 @@ namespace nike_shoes_shop_backend.Controllers
             return product == null ? NotFound() : Ok(product);
         }
 
+        [HttpGet("productPaginate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetProductPaginate(int page = 1, int pageSize = 12)
+        {
+            int startIndex = (page - 1) * pageSize;
+            var products = await _context.Products.Skip(startIndex).Take(pageSize).ToListAsync();
+
+            return products.Count == 0 ? NotFound() : Ok(products);
+        }
+
         [HttpGet("searchProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
